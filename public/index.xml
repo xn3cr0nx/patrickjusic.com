@@ -12,17 +12,35 @@
     
     
     <item>
+      <title>About</title>
+      <link>https://patrickjusic.com/about/</link>
+      <pubDate>Sun, 14 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://patrickjusic.com/about/</guid>
+      <description>Hi there I&amp;rsquo;m Patrick Jusic this is a fast recap of my curriculum. You can find more on LinkedIn or in my Resume
+Working for  Buull Exchange
+ Education  Politecnico di Milano attending
+Università Politecnica delle Marche 110 summa cum laude
+Istituto Tecnico G. Marconi 100 / 100
+ Certifications ETS - TOEFL
+Udacity - Mobile Web Specialist
+Udemy - Web Development w/ Google&amp;rsquo;s Go (golang) Programming Language Udemy - Docker Mastery: The Complete Toolset From a Docker Captain</description>
+    </item>
+    
+    <item>
       <title>Contact</title>
       <link>https://patrickjusic.com/contact/</link>
       <pubDate>Sun, 14 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>https://patrickjusic.com/contact/</guid>
-      <description> Patrick Jusic Emails  patrickjusic96@gmail.com
+      <description> Emails  patrickjusic96@gmail.com
 patrick.jusic@buull.com
 patrick-96@live.it
 xn3cr0nx@pm.me
  Phone  334857139*
  Twitter  http://bit.ly/2yBsbwI
+ LinkedIn  http://bit.ly/2yhTGfb
+ GitHub  http://bit.ly/2ygJRhK
  </description>
     </item>
     
@@ -32,26 +50,7 @@ xn3cr0nx@pm.me
       <pubDate>Sat, 13 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>https://patrickjusic.com/post/hello/</guid>
-      <description> &amp;ldquo;Hello, friend?&amp;rdquo; That&amp;rsquo;s lame. Maybe I should give you a name&amp;hellip;
-But that&amp;rsquo;s a slippery slope.
-You&amp;rsquo;re only in my head.
-We have to remember that&amp;hellip;
-Shit.
-It&amp;rsquo;s actually happened.
-I&amp;rsquo;m talking to an imaginary person.
-— Mr. Robot S01E01
- </description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://patrickjusic.com/about/</link>
-      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://patrickjusic.com/about/</guid>
-      <description>Hi there My name is Radek and I&amp;rsquo;m the author of this theme. I made it to help you present your ideas easier.
-We all know how hard is to start something on the web, especially these days. You need to prepare a bunch of stuff, configure them and when that’s done — create the content.
-This theme is pretty basic and covers all of the essentials. All you have to do is start typing!</description>
+      <description>&#34;Hello, friend?&#34; That&#39;s lame.  Maybe I should give you a name...  But that&#39;s a slippery slope.  You&#39;re only in my head.  We have to remember that...  Shit.  It&#39;s actually happened.  I&#39;m talking to an imaginary person.   **— Mr. Robot S01E01** -- I built this website because I missed one. I used Hugo as you can see from footer, and I used this amazing theme by panr.</description>
     </item>
     
   </channel>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://patrickjusic.com/about/</loc>
+    <lastmod>2018-10-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://patrickjusic.com/contact/</loc>
     <lastmod>2018-10-14T00:00:00+00:00</lastmod>
   </url>
@@ -10,11 +15,6 @@
   <url>
     <loc>https://patrickjusic.com/post/hello/</loc>
     <lastmod>2018-10-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://patrickjusic.com/about/</loc>
-    <lastmod>2018-07-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>

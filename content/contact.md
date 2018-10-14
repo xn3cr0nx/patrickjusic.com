@@ -15,3 +15,9 @@ author = "Patrick"
 
 ## Twitter
 > http://bit.ly/2yBsbwI
+
+## LinkedIn
+> http://bit.ly/2yhTGfb
+
+## GitHub
+> http://bit.ly/2ygJRhK

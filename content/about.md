@@ -1,22 +1,38 @@
 +++
 title = "About"
-date = "2018-07-18"
-author = "Radek"
+date = "2018-10-14"
+author = "Patrick"
 +++
 
 <h2>> Hi there<span class="logo__cursor" style="width: 3px; height: 1.625rem;"></span></h2>
 
-My name is Radek and I'm the author of this theme. I made it to help you present your ideas easier.
- 
-We all know how hard is to start something on the web, especially these days. You need to prepare a bunch of stuff, configure them and when that’s done — create the content.
- 
-This theme is pretty basic and covers all of the essentials. All you have to do is start typing!
- 
-The theme includes:
- 
-- **light/dark mode**, depending on your preferences
-- great reading experience thanks to [**Inter UI font**](https://rsms.me/inter/), made by [Rasmus Andersson](https://rsms.me/about/)
-- nice code highlighting thanks to [**PrismJS**](https://prismjs.com)
-- an easy way to modify the theme (**Webpack, NodeJS, PostCSS** — initial setup created by [Marcin Dziewulski](http://www.mobily.pl))
- 
-So, there you have it... enjoy!
+I'm Patrick Jusic this is a fast recap of my curriculum. You can find more on [LinkedIn] (https://www.linkedin.com/in/patrickjusic/) or in my [Resume](https://www.dropbox.com/s/xplmano6yncvxoz/Patrick_Jusic_resume.pdf?dl=0)  
+
+## Working for 
+> *Buull Exchange*
+
+## Education
+> Politecnico di Milano *attending*  
+> Università Politecnica delle Marche *110 summa cum laude*   
+> Istituto Tecnico G. Marconi *100 / 100*  
+
+## Certifications
+[ETS - TOEFL](https://www.dropbox.com/s/jpeumwnpy5jfimu/TOEFL.pdf?dl=0)  
+[Udacity - Mobile Web Specialist](https://www.dropbox.com/s/4bx8ejnmb7c1hpu/UdacityMobileWebSpecialistNanodegree.pdf?dl=0)  
+[Udemy - Web Development w/ Google's Go (golang) Programming Language](https://www.dropbox.com/s/wnhtvjd1emongy9/UC-QY8X93LP.pdf?dl=0)
+[Udemy - Docker Mastery: The Complete Toolset From a Docker Captain](https://www.dropbox.com/s/9o0nszw9zt33ekv/UC-LWGTG1Q4.pdf?dl=0)  
+[Udemy - Learn Ethical Hacking From Scratch](https://www.dropbox.com/s/80getnzbyzis0b5/UC-6J85K5NL.pdf?dl=0)  
+[Udemy - Learn DevOps: Advanced Kubernetes Usage](https://www.dropbox.com/s/73mv6glrxm963vd/UC-0YTJSX81.pdf?dl=0)  
+[Udemy - Learn DevOps: The Complete Kubernetes Course](https://www.dropbox.com/s/3w0edhn05zo42bu/UC-4XD75H84.pdf?dl=0)  
+[Udacity - EU Scholarship - Android Development for Beginners](https://www.dropbox.com/s/i0ylcgphvjd9yar/googlescolarship.png?dl=0)  
+[Cybrary - Cryptography](https://www.dropbox.com/s/atdsbtbbbyjs6i7/cybrary-cert.pdf?dl=0)  
+
+## Skills
+#### Programming Languages
+> Javascript (React & Redux), NodeJs (Express), Python, Golang (Gin), Bash, C, C++, SQL, CSS, HTML5, Solidity, MATLAB, LADDER, SCL     
+
+#### DevOps
+> Docker, Kubernetes, Ansible, Digital Ocean, AWS, Google Cloud Engine
+
+#### Cryptocurrencies
+> Bitcoin, Ethereum, IOTA

@@ -5,8 +5,10 @@ theme = "hello-friend"
 copyright = ""
 paginate = 5
 
-# [params]
+
+[params]
 #   subtitle = "Your site subtitle"
+  enableRobotsTXT = true
 
 [params.logo]
   logoText = "xn3cr0nx"
