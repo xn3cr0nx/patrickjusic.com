@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Patrick Jusic</title>
@@ -17,7 +17,7 @@
       <pubDate>Sat, 13 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>https://patrickjusic.com/post/hello/</guid>
-      <description>&#34;Hello, friend?&#34; That&#39;s lame.  Maybe I should give you a name...  But that&#39;s a slippery slope.  You&#39;re only in my head.  We have to remember that...  Shit.  It&#39;s actually happened.  I&#39;m talking to an imaginary person.   **— Mr. Robot S01E01** -- I built this website because I missed one. I used Hugo as you can see from footer, and I used this amazing theme by panr.</description>
+      <description>I built this website because I missed one. I used Hugo as you can see from footer, and I used this amazing theme by panr. I kept the image of the first post because it was amazing inside the theme. This theme is a good representation of myself, I use this style in my text editors, my OS.. but I&amp;rsquo;m not like Mr. Robot, though I love the character. I don&amp;rsquo;t think I&amp;rsquo;m going to make a series of blog posts, maybe in the future.</description>
     </item>
     
   </channel>

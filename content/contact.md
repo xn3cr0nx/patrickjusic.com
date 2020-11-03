@@ -1,14 +1,13 @@
 +++
 title = "Contact"
-date = "2018-10-14"
+date = "2020-11-03"
 author = "Patrick"
 +++
 
 ## Emails
+> patrick.jusic@protonmail.com  
+> patrick.jusic@toggl.com 
 > patrickjusic96@gmail.com  
-> patrick.jusic@buull.com  
-> patrick-96@live.it  
-> xn3cr0nx@pm.me  
 
 ## Phone
 > 334857139*

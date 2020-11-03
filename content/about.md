@@ -9,7 +9,7 @@ author = "Patrick"
 I'm Patrick Jusic this is a fast recap of my curriculum. You can find more on [LinkedIn] (https://www.linkedin.com/in/patrickjusic/) or in my [Resume](https://www.dropbox.com/s/xplmano6yncvxoz/Patrick_Jusic_resume.pdf?dl=0)  
 
 ## Working for 
-> *Buull Exchange*
+> *Toggl Track*
 
 ## Education
 > Politecnico di Milano *attending*  
@@ -29,7 +29,7 @@ I'm Patrick Jusic this is a fast recap of my curriculum. You can find more on [L
 
 ## Skills
 #### Programming Languages
-> Javascript (React & Redux), NodeJs (Express), Python, Golang (Gin), Bash, C, C++, SQL, CSS, HTML5, Solidity, MATLAB, LADDER, SCL     
+> Go, Javascript, NodeJs, Rust, Python, Bash, C, C++, SQL, CSS, HTML5, 
 
 #### DevOps
 > Docker, Kubernetes, Ansible, Digital Ocean, AWS, Google Cloud Engine
