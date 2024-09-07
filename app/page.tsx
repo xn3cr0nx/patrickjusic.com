@@ -14,6 +14,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 // import { Menu } from "lucide-react";
 import { SiGithub, SiX, SiLinkedin } from "@icons-pack/react-simple-icons";
 
@@ -158,12 +164,47 @@ export default function LandingPage() {
           </div>
         </main>
 
-        <footer className="bg-orange-500 p-4 mt-8">
-          <div className="text-sm md:text-base">
-            <p className="font-bold">Head of Engineering @ Toggl</p>
-            <p className="font-bold">Co-Founder & CTO @ Chipcolate</p>
-          </div>
-        </footer>
+        <Accordion type="single" collapsible className="w-full mt-8">
+          <AccordionItem value="item-1" className="border-orange-500">
+            <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg hover:bg-orange-600 hover:no-underline">
+              Head of Engineering @{" "}
+              <Link
+                href="http://toggl.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-zinc-900"
+              >
+                Toggl
+              </Link>
+            </AccordionTrigger>
+            <AccordionContent className="bg-zinc-800 p-4 rounded-b-lg">
+              <p>
+                Leading the engineering team at Toggl, focusing on time tracking
+                and productivity tools. Responsible for technical strategy, team
+                growth, and product development.
+              </p>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2" className="border-orange-500 mt-2">
+            <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg hover:bg-orange-600 hover:no-underline">
+              Co-Founder & CTO @{" "}
+              <Link
+                href="http://chipcolate.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-zinc-900"
+              >
+                Chipcolate
+              </Link>
+            </AccordionTrigger>
+            <AccordionContent className="bg-zinc-800 p-4 rounded-b-lg">
+              <p>
+                Co-founded Chipcolate, a startup focused on embedded systems and
+                3D printing.
+              </p>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );
