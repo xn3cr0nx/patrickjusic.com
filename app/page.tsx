@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -14,25 +14,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 // import { Menu } from "lucide-react";
-import { SiGithub, SiX, SiLinkedin } from "@icons-pack/react-simple-icons";
+import { MessageForm } from "@/components/message-form";
+import { SiGithub, SiLinkedin, SiX } from "@icons-pack/react-simple-icons";
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted");
-    setIsModalOpen(false);
-  };
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white flex flex-col">
@@ -107,49 +98,18 @@ export default function LandingPage() {
               <li>Cypherpunk</li>
               <li>Accelerationist</li>
             </ul>
+
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-orange-500 hover:bg-orange-600 text-white w-full sm:w-64">
                   Want to get in touch?
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] bg-zinc-800 text-white">
+              <DialogContent className="sm:max-w-[500px] bg-zinc-800 text-white">
                 <DialogHeader>
                   <DialogTitle>Send me a message</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      required
-                      className="bg-zinc-700 text-white border-zinc-600"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      className="bg-zinc-700 text-white border-zinc-600"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      required
-                      className="bg-zinc-700 text-white border-zinc-600"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="bg-orange-500 hover:bg-orange-600 text-white w-full"
-                  >
-                    Send Message
-                  </Button>
-                </form>
+                <MessageForm onSuccess={() => setIsModalOpen(false)} />
               </DialogContent>
             </Dialog>
           </div>
