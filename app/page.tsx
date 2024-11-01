@@ -115,11 +115,11 @@ export default function LandingPage() {
           </div>
           <div className="w-full lg:w-1/2">
             <Image
-              src="/portrait-bw-sat.jpeg"
+              src="/traced-portrait-bw.png"
               alt="Patrick Jusic"
               width={600}
               height={600}
-              className="w-full h-64 md:h-96 lg:h-auto object-cover rounded-lg"
+              className="w-full h-64 md:h-96 lg:h-auto object-cover rounded-lg drop-shadow-[1rem_1rem_1rem_#000]"
             />
           </div>
         </main>
@@ -127,15 +127,17 @@ export default function LandingPage() {
         <Accordion type="single" collapsible className="w-full mt-8">
           <AccordionItem value="item-1" className="border-orange-500">
             <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg hover:bg-orange-600 hover:no-underline">
-              Head of Engineering @{" "}
-              <Link
-                href="http://toggl.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-zinc-900"
-              >
-                Toggl
-              </Link>
+              <div className="flex">
+                Head of Engineering @
+                <Link
+                  href="http://toggl.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-zinc-900 font-bold ml-1"
+                >
+                  Toggl
+                </Link>
+              </div>
             </AccordionTrigger>
             <AccordionContent className="bg-zinc-800 p-4 rounded-b-lg">
               <p>
@@ -147,15 +149,17 @@ export default function LandingPage() {
           </AccordionItem>
           <AccordionItem value="item-2" className="border-orange-500 mt-2">
             <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg hover:bg-orange-600 hover:no-underline">
-              Co-Founder & CTO @{" "}
-              <Link
-                href="http://chipcolate.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-zinc-900"
-              >
-                Chipcolate
-              </Link>
+              <div className="flex">
+                Co-Founder & CTO @
+                <Link
+                  href="http://chipcolate.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-zinc-900  font-bold ml-1"
+                >
+                  Chipcolate
+                </Link>
+              </div>
             </AccordionTrigger>
             <AccordionContent className="bg-zinc-800 p-4 rounded-b-lg">
               <p>
