@@ -28,7 +28,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-zinc-900 text-white flex flex-col">
       <div className="container mx-auto px-4 lg:px-8 flex flex-col h-full">
-        <header className="py-4 flex flex-wrap justify-center md:justify-between items-center border-b border-zinc-700">
+        <header className="py-4 flex flex-col lg:flex-row justify-center lg:justify-between items-center border-b border-zinc-700">
           <h1 className="text-xl font-bold">
             Patrick Jusic <span className="text-orange-500">| xn3cr0nx</span>
           </h1>
@@ -86,9 +86,9 @@ export default function LandingPage() {
           </div>
         </header>
 
-        <main className="flex-grow pt-8 md:py-8 flex flex-col lg:flex-row items-center gap-8">
+        <main className="flex-grow pt-8 lg:py-8 flex flex-col lg:flex-row items-center gap-8">
           <div className="w-full lg:w-1/2 space-y-8">
-            <ul className="space-y-2 text-xl md:text-3xl font-bold">
+            <ul className="space-y-2 text-xl lg:text-3xl font-bold">
               <li>Geek</li>
               <li>Father</li>
               <li>Founder</li>
@@ -105,7 +105,7 @@ export default function LandingPage() {
                 alt="Patrick Jusic"
                 width={600}
                 height={600}
-                className="w-full h-64 md:h-96 object-cover rounded-lg drop-shadow-[1rem_1rem_1rem_#000]"
+                className="w-full h-auto object-cover rounded-lg drop-shadow-[1rem_1rem_1rem_#000]"
               />
             </div>
 
@@ -129,7 +129,7 @@ export default function LandingPage() {
               alt="Patrick Jusic"
               width={600}
               height={600}
-              className="w-full h-64 md:h-96 lg:h-auto object-cover rounded-lg drop-shadow-[1rem_1rem_1rem_#000]"
+              className="w-full h-auto object-cover rounded-lg drop-shadow-[1rem_1rem_1rem_#000]"
             />
           </div>
         </main>
@@ -137,7 +137,7 @@ export default function LandingPage() {
         <Accordion type="single" collapsible className="w-full mt-8">
           <AccordionItem value="item-1" className="border-orange-500">
             <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg hover:bg-orange-600 hover:no-underline">
-              <div className="flex whitespace-nowrap text-sm md:text-base">
+              <div className="flex whitespace-nowrap text-sm lg:text-base">
                 Head of Engineering @
                 <Link
                   href="http://toggl.com"
@@ -159,7 +159,7 @@ export default function LandingPage() {
           </AccordionItem>
           <AccordionItem value="item-2" className="border-orange-500 mt-2">
             <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg max-w-[100%] hover:bg-orange-600 hover:no-underline">
-              <div className="flex whitespace-nowrap text-sm md:text-base">
+              <div className="flex whitespace-nowrap text-sm lg:text-base">
                 Co-Founder & CTO @
                 <Link
                   href="http://chipcolate.com"
