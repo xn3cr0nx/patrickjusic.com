@@ -115,7 +115,7 @@ export default function LandingPage() {
                   Want to get in touch?
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px] bg-zinc-800 text-white">
+              <DialogContent className="max-w-[95vw] md:max-w-[500px] bg-zinc-800 text-white rounded-lg">
                 <DialogHeader>
                   <DialogTitle>Send me a message</DialogTitle>
                 </DialogHeader>
