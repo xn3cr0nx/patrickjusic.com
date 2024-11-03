@@ -1,11 +1,9 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import experiences from "@/components/experiences";
+import { MessageForm } from "@/components/message-form";
+import RoleAccordion from "@/components/role-accordion";
+import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,16 +12,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { SiGithub, SiLinkedin, SiX } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-// import { Menu } from "lucide-react";
-import { MessageForm } from "@/components/message-form";
-import { SiGithub, SiLinkedin, SiX } from "@icons-pack/react-simple-icons";
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white flex flex-col">
@@ -32,35 +27,6 @@ export default function LandingPage() {
           <h1 className="text-xl font-bold">
             Patrick Jusic <span className="text-orange-500">| xn3cr0nx</span>
           </h1>
-          {/* <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-          <nav
-            className={`w-full lg:w-auto ${
-              isMenuOpen ? "block" : "hidden"
-            } lg:block mt-4 lg:mt-0`}
-          >
-            <ul className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
-              <li>
-                <Link href="#" className="hover:text-orange-500">
-                  Beliefs
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-orange-500">
-                  Career
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-orange-500">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </nav> */}
           <div className="flex space-x-4 mt-4 lg:mt-0">
             <Link
               href="https://x.com/xn3cr0nx"
@@ -134,51 +100,22 @@ export default function LandingPage() {
           </div>
         </main>
 
-        <Accordion type="single" collapsible className="w-full mt-8">
-          <AccordionItem value="item-1" className="border-orange-500">
-            <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg hover:bg-orange-600 hover:no-underline">
-              <div className="flex whitespace-nowrap text-sm lg:text-base">
-                Head of Engineering @
-                <Link
-                  href="http://toggl.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-zinc-900 font-bold ml-1"
-                >
-                  Toggl
-                </Link>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="bg-zinc-800 p-4 rounded-b-lg">
-              <p>
-                Leading the engineering team at Toggl, focusing on time tracking
-                and productivity tools. Responsible for technical strategy, team
-                growth, and product development.
-              </p>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2" className="border-orange-500 mt-2">
-            <AccordionTrigger className="bg-orange-500 text-white p-4 rounded-t-lg max-w-[100%] hover:bg-orange-600 hover:no-underline">
-              <div className="flex whitespace-nowrap text-sm lg:text-base">
-                Co-Founder & CTO @
-                <Link
-                  href="http://chipcolate.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-zinc-900  font-bold ml-1"
-                >
-                  Chipcolate
-                </Link>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="bg-zinc-800 p-4 rounded-b-lg">
-              <p>
-                Co-founded Chipcolate, a startup focused on embedded systems and
-                3D printing.
-              </p>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <section className="mt-8">
+          <p className="text-xl lg:text-3xl font-bold">Background</p>
+          <Accordion type="single" collapsible className="w-full mt-4">
+            {experiences.map((experience, index) => (
+              <RoleAccordion
+                key={experience.company}
+                value={`item-${index + 1}`}
+                title={experience.title}
+                company={experience.company}
+                companyUrl={experience.companyUrl}
+                period={experience.period}
+                content={experience.content}
+              />
+            ))}
+          </Accordion>
+        </section>
       </div>
     </div>
   );
