@@ -16,6 +16,7 @@ import { SiGithub, SiLinkedin, SiX } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { Lightning, GlitchText } from "@/components/bits";
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,8 +25,16 @@ export default function LandingPage() {
     <div className="min-h-screen bg-zinc-900 text-white flex flex-col">
       <div className="container mx-auto px-4 lg:px-8 flex flex-col h-full">
         <header className="py-4 flex flex-col lg:flex-row justify-center lg:justify-between items-center border-b border-zinc-700">
-          <h1 className="text-xl font-bold">
-            Patrick Jusic <span className="text-orange-500">| xn3cr0nx</span>
+          <h1 className="flex text-xl font-bold">
+            Patrick Jusic |
+            <GlitchText
+              speed={1}
+              enableShadows={true}
+              enableOnHover={false}
+              className="custom-class text-orange-500 text-2xl ml-4"
+            >
+              xn3cr0nx
+            </GlitchText>
           </h1>
           <div className="flex space-x-4 mt-4 lg:mt-0">
             <Link
@@ -52,6 +61,7 @@ export default function LandingPage() {
           </div>
         </header>
 
+        {/* <Lightning hue={220} xOffset={0} speed={1} intensity={1} size={1} /> */}
         <main className="flex-grow pt-8 lg:py-8 flex flex-col lg:flex-row items-center gap-8">
           <div className="w-full lg:w-1/2 space-y-8">
             <ul className="space-y-2 text-xl lg:text-3xl font-bold">
