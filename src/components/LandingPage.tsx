@@ -1,22 +1,20 @@
 "use client";
 
-import experiences from "@/components/experiences";
-import { MessageForm } from "@/components/message-form";
-import RoleAccordion from "@/components/role-accordion";
-import { Accordion } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+import experiences from "./experiences";
+import { MessageForm } from "./message-form";
+import RoleAccordion from "./role-accordion";
+import { Accordion } from "./ui/accordion";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "./ui/dialog";
 import { SiGithub, SiLinkedin, SiX } from "@icons-pack/react-simple-icons";
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
-import { Lightning, GlitchText } from "@/components/bits";
+import { GlitchText } from "./bits";
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,27 +35,27 @@ export default function LandingPage() {
             </GlitchText>
           </h1>
           <div className="flex space-x-4 mt-4 lg:mt-0">
-            <Link
+            <a
               href="https://x.com/xn3cr0nx"
               target="_blank"
               rel="noopener noreferrer"
             >
               <SiX className="w-5 h-5 hover:text-orange-500" />
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://github.com/xn3cr0nx"
               target="_blank"
               rel="noopener noreferrer"
             >
               <SiGithub className="w-5 h-5 hover:text-orange-500" />
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://www.linkedin.com/in/patrickjusic/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <SiLinkedin className="w-5 h-5 hover:text-orange-500" />
-            </Link>
+            </a>
           </div>
         </header>
 
@@ -76,7 +74,7 @@ export default function LandingPage() {
             </ul>
 
             <div className="w-full -ml-4 md:hidden">
-              <Image
+              <img
                 src="/traced-portrait-bw.png"
                 alt="Patrick Jusic"
                 width={600}
@@ -100,7 +98,7 @@ export default function LandingPage() {
             </Dialog>
           </div>
           <div className="lg:w-1/2 mr-0 hidden md:block">
-            <Image
+            <img
               src="/traced-portrait-bw.png"
               alt="Patrick Jusic"
               width={600}
