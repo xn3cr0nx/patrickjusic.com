@@ -3,7 +3,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Link from "next/link";
 import React from "react";
 
 const RoleAccordion: React.FC<{
@@ -19,14 +18,14 @@ const RoleAccordion: React.FC<{
       <div className="flex flex-col md:flex-row justify-between items-start w-full md:pr-8">
         <div className="flex whitespace-nowrap text-sm lg:text-base">
           {`${props.title} @`}
-          <Link
+          <a
             href={props.companyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-zinc-900 font-bold ml-1"
           >
             {props.company}
-          </Link>
+          </a>
         </div>
         <p className="italic">{props.period}</p>
       </div>
