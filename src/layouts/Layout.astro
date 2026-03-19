@@ -1,14 +1,23 @@
 ---
 import '../styles/globals.css';
 import { Toaster } from '../components/ui/toaster';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} | Patrick Jusic` : 'Patrick Jusic';
+const pageDescription = description || 'Hello! This is my personal website';
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Patrick Jusic</title>
-    <meta name="description" content="Hello! This is my personal website" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   </head>
   <body class="antialiased">
