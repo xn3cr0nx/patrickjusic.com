@@ -10,7 +10,7 @@ const { text, class: className = '' } = Astro.props;
 <div
   data-text={text}
   class:list={[
-    'text-white text-[clamp(2rem,10vw,8rem)] font-black relative mx-auto select-none cursor-pointer',
+    'text-white font-black relative select-none cursor-pointer',
     'after:content-[attr(data-text)] after:absolute after:top-0 after:left-[10px] after:text-white after:bg-[#060606] after:overflow-hidden after:[clip-path:inset(0_0_0_0)] after:[text-shadow:-5px_0_red] after:animate-glitch-after',
     'before:content-[attr(data-text)] before:absolute before:top-0 before:left-[-10px] before:text-white before:bg-[#060606] before:overflow-hidden before:[clip-path:inset(0_0_0_0)] before:[text-shadow:5px_0_cyan] before:animate-glitch-before',
     className,
