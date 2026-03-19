@@ -53,7 +53,7 @@ const experiences = [
     title: "Head of Engineering",
     company: "Toggl",
     companyUrl: "http://toggl.com",
-    period: "2020 - 2025",
+    period: "Oct 2020 - Mar 2025",
     content: (
       <div className="flex flex-col gap-2">
         <p>
