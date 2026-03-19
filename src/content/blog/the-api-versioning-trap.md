@@ -2,7 +2,8 @@
 title: "The API Versioning Trap"
 description: "Toggl spent over a decade managing the deprecation of their V8 API while transitioning to V9. Lessons learned on API versioning for product companies."
 date: 2024-09-18
-authors: ["Patrick Jusic", "Nick Meessen - de Wit"]
+authors: ["Patrick Jusic"]
+originalUrl: "https://engineering.toggl.com/blog/the-api-versioning-trap/"
 ---
 
 At Toggl, we recently concluded a decade-long journey to retire our V8 API and fully transition to the latest V9. This process was far more complex and time-consuming than we could ever expect, highlighting the challenges of API versioning for a product company. This post explores the complexities of API versioning, the pitfalls we encountered, and how best practices can differ depending on whether you're building a B2C or B2B SaaS product.
