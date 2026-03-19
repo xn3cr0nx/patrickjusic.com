@@ -1,15 +1,23 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  output: 'static',
+  adapter: vercel(),
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
   ],
+  vite: {
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
+    },
+    ssr: {
+      noExternal: ['@radix-ui/*'],
+    },
+  },
   fonts: [
     {
       provider: fontProviders.local(),
