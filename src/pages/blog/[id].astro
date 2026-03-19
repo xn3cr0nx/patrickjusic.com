@@ -46,6 +46,15 @@ const { Content } = await render(post);
               <span>by {post.data.authors.join(', ')}</span>
             )}
           </div>
+          {post.data.originalUrl && (
+            <div class="border border-orange-500/40 bg-orange-500/10 rounded-lg p-5 mb-8">
+              <p class="text-orange-300 text-sm leading-relaxed m-0">
+                <strong class="text-orange-400">Note:</strong> This post was originally published on the
+                <a href={post.data.originalUrl} target="_blank" rel="noopener noreferrer" class="text-orange-400 underline hover:text-orange-300">Toggl Engineering Blog</a>.
+                It is mirrored here to ensure it remains available in case the original is taken down.
+              </p>
+            </div>
+          )}
           <div class="prose prose-invert prose-orange max-w-none
             prose-headings:font-bold
             prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
