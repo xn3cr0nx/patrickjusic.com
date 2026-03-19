@@ -1,0 +1,18 @@
+---
+import '../styles/globals.css';
+import { Toaster } from '../components/ui/toaster';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Patrick Jusic</title>
+    <meta name="description" content="Hello! This is my personal website" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  </head>
+  <body class="antialiased">
+    <slot />
+    <Toaster client:load />
+  </body>
+</html>
