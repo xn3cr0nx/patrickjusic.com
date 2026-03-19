@@ -1,54 +1,5 @@
 const experiences = [
   {
-    title: "Head of Engineering",
-    company: "Toggl",
-    companyUrl: "http://toggl.com",
-    period: "2020 - Present",
-    content: (
-      <div className="flex flex-col gap-2">
-        <p>
-          Initially joined the Backend Core team as Software Engineer, I focused
-          on API code design and scalability.
-        </p>
-        <p>
-          Almost two years later, I took over leadership of the Backend Core and
-          kept focusing on scalability, fostering initiatives like{" "}
-          <a
-            href="https://engineering.toggl.com/blog/journey-into-postgresql-logical-replication/index.html"
-            className="font-bold text-orange-500 underline"
-          >
-            in-house warehouse using logical replication
-          </a>
-          .
-        </p>
-        <p>
-          About 1.5 year later, I joined the management team, leading the
-          department as <b>Head of Engineering</b>. I am in charge of the
-          technical strategy, enabling the future of the Toggl Suite of
-          products, allowing horizontally scalable and reusable pieces of
-          infrastructure that allow us to support an increasing amount of users
-          while expanding the set of functionalities and domains covered by our
-          Suite.
-        </p>
-        <p>
-          During my leadership, the entire infrastructure was migrated to
-          Kubernetes in GCP, serving 500k+ daily active users. The engineering
-          department published the{" "}
-          <a
-            href="https://engineering.toggl.com"
-            className="font-bold text-orange-500 underline"
-          >
-            engineering website
-          </a>{" "}
-          where we published about our projects and innovations, where I
-          published myself about outages and challenges managing our API. A lot
-          has been achieved and I am really proud about my contribution to the
-          growth of the company.
-        </p>
-      </div>
-    ),
-  },
-  {
     title: "Co-Founder & CTO",
     company: "Chipcolate",
     companyUrl: "https://chipcolate.com",
@@ -94,6 +45,54 @@ const experiences = [
             Telespazio
           </a>
           .
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Head of Engineering",
+    company: "Toggl",
+    companyUrl: "http://toggl.com",
+    period: "2020 - 2025",
+    content: (
+      <div className="flex flex-col gap-2">
+        <p>
+          Initially joined the Backend Core team as Software Engineer, I focused
+          on API code design and scalability.
+        </p>
+        <p>
+          Almost two years later, I took over leadership of the Backend Core and
+          kept focusing on scalability, fostering initiatives like{" "}
+          <a
+            href="https://engineering.toggl.com/blog/journey-into-postgresql-logical-replication/index.html"
+            className="font-bold text-orange-500 underline"
+          >
+            in-house warehouse using logical replication
+          </a>
+          .
+        </p>
+        <p>
+          About 1.5 year later, I joined the management team, leading the
+          department as <b>Head of Engineering</b>. I was in charge of the
+          technical strategy, enabling the future of the Toggl Suite of
+          products, allowing horizontally scalable and reusable pieces of
+          infrastructure to support an increasing amount of users while
+          expanding the set of functionalities and domains covered by the Suite.
+        </p>
+        <p>
+          During my leadership, the entire infrastructure was migrated to
+          Kubernetes in GCP, serving 500k+ daily active users. The engineering
+          department published the{" "}
+          <a
+            href="https://engineering.toggl.com"
+            className="font-bold text-orange-500 underline"
+          >
+            engineering website
+          </a>{" "}
+          where we published about our projects and innovations, where I
+          published myself about outages and challenges managing our API. A lot
+          was achieved and I am really proud about my contribution to the
+          growth of the company.
         </p>
       </div>
     ),
