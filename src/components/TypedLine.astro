@@ -1,0 +1,123 @@
+---
+/**
+ * TypedLine — a Roboto Mono line that types and deletes through a list of
+ * strings, preceded by a terminal-style "$ " lead and followed by a blinking
+ * green block cursor.
+ *
+ * Props:
+ *   lines — string[] to cycle through (required)
+ *   class — extra classes merged onto the wrapper
+ *
+ * Reduced motion: renders the first line statically (no typing loop).
+ */
+interface Props {
+  lines: string[];
+  class?: string;
+}
+
+const { lines, class: className = '' } = Astro.props;
+const first = lines[0] ?? '';
+const linesJson = JSON.stringify(lines);
+---
+
+<div class:list={['typed mono', className]} data-lines={linesJson}>
+  <span class="lead">$ </span><span class="t" data-typed>{first}</span><span
+    class="c"
+    aria-hidden="true"></span>
+</div>
+
+<style>
+  .typed {
+    margin-top: 30px;
+    font-size: clamp(14px, 1.5vw, 19px);
+    color: var(--muted);
+  }
+  .typed .lead {
+    color: var(--green-deep);
+  }
+  .typed .t {
+    color: var(--green-bright);
+  }
+  .typed .c {
+    display: inline-block;
+    width: 9px;
+    height: 1.05em;
+    background: var(--green);
+    transform: translateY(3px);
+    margin-left: 2px;
+    animation: typedblink 1.1s steps(1) infinite;
+  }
+  @keyframes typedblink {
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .typed .c {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initTyped() {
+    const wraps = document.querySelectorAll<HTMLElement>('.typed[data-lines]');
+    wraps.forEach((wrap) => {
+      if (wrap.dataset.typedInit === '1') return;
+      wrap.dataset.typedInit = '1';
+
+      const el = wrap.querySelector<HTMLElement>('[data-typed]');
+      if (!el) return;
+
+      let lines: string[] = [];
+      try {
+        lines = JSON.parse(wrap.dataset.lines || '[]');
+      } catch {
+        lines = [];
+      }
+      if (lines.length === 0) return;
+
+      const prefersReduced = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+
+      if (prefersReduced) {
+        el.textContent = lines[0];
+        return;
+      }
+
+      let li = 0;
+      let ci = 0;
+      let del = false;
+
+      function tick() {
+        const s = lines[li];
+        if (!del) {
+          ci++;
+          if (ci >= s.length) {
+            // BUGFIX: commit the full string before flipping to delete so the
+            // final character is never dropped.
+            el!.textContent = s;
+            del = true;
+            setTimeout(tick, 1600);
+            return;
+          }
+        } else {
+          ci--;
+          if (ci <= 0) {
+            del = false;
+            li = (li + 1) % lines.length;
+          }
+        }
+        el!.textContent = s.slice(0, ci);
+        setTimeout(tick, del ? 32 : 60);
+      }
+
+      // start fresh from an empty line
+      el.textContent = '';
+      tick();
+    });
+  }
+
+  initTyped();
+</script>

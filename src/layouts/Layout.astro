@@ -1,27 +1,70 @@
 ---
 import '../styles/globals.css';
+import { Font } from 'astro:assets';
 import { Toaster } from '../components/ui/toaster';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Which nav item is current: "home" | "work" | "writing" | "about" | "contact". */
+  active?: 'home' | 'work' | 'writing' | 'about' | 'contact';
+  /** Optional OG/twitter image path (absolute, under /public). */
+  image?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, active = 'home', image } = Astro.props;
+
 const pageTitle = title ? `${title} | Patrick Jusic` : 'Patrick Jusic';
-const pageDescription = description || 'Hello! This is my personal website';
+const pageDescription =
+  description ||
+  'Patrick Jusic — founder & engineering leader. I scale systems and the teams behind them.';
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const ogImage = new URL(image ?? '/portrait-field.jpg', Astro.site ?? Astro.url);
 ---
 
+<!doctype html>
 <html lang="en">
   <head>
+    <!-- Progressive enhancement flag: reveal-on-scroll hiding is gated on .js,
+         so content stays visible if scripts fail or are disabled. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="theme-color" content="#080d12" />
+
+    <!-- Fonts (self-hosted at build via Astro's Google font provider) -->
+    <Font cssVariable="--font-roboto" preload />
+    <Font cssVariable="--font-roboto-mono" preload />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Patrick Jusic" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@xn3cr0nx" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="antialiased">
+    <Nav active={active} />
     <slot />
+    <Footer />
     <Toaster client:load />
   </body>
 </html>

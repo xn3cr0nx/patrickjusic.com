@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Kicker from '../../components/Kicker.astro';
+import GlowHeading from '../../components/GlowHeading.astro';
+import WritingCard from '../../components/WritingCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// Estimate reading time from the raw markdown body (~200 wpm).
+function readingTime(body: string | undefined): number {
+  const words = (body ?? '').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+---
+
+<Layout
+  title="Writing"
+  description="Essays and notes on scaling systems, engineering, and the teams behind the software."
+  active="writing"
+>
+  <main class="mx-auto w-full max-w-3xl px-5 pb-24 pt-28 md:pt-32 lg:px-6">
+    <header class="mb-12 md:mb-16" data-reveal>
+      <Kicker>// writing</Kicker>
+      <GlowHeading level={1} class="mt-4 text-4xl md:text-6xl tracking-tight">
+        Writing
+      </GlowHeading>
+      <p class="mt-5 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+        Essays and notes on scaling systems, API design, and the engineering
+        decisions that compound over a decade.
+      </p>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <p class="text-[var(--muted)]">Nothing published yet — check back soon.</p>
+      ) : (
+        <div class="flex flex-col gap-5">
+          {posts.map((post, i) => (
+            <div data-reveal style={`--reveal-delay:${(i * 0.06).toFixed(2)}s`}>
+              <WritingCard
+                href={`/writing/${post.id}`}
+                title={post.data.title}
+                date={post.data.date}
+                readingTime={readingTime(post.body)}
+                excerpt={post.data.description}
+                mirrored={Boolean(post.data.originalUrl)}
+              />
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </main>
+</Layout>
+
+<script>
+  import { initReveal } from '../../lib/reveal';
+  initReveal();
+</script>

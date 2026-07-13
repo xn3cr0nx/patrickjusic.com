@@ -1,0 +1,320 @@
+---
+/**
+ * Nav — fixed top navigation.
+ *
+ * Props:
+ *   active — which nav item is current: "work" | "writing" | "about" | "contact"
+ *            (omit or "home" for the homepage; nothing is highlighted)
+ *
+ * A permanent, subtle top-down scrim keeps the links legible over the bright
+ * hero portrait; a tiny inline script solidifies + blurs the background once
+ * scrolled. Below 720px the links collapse into an accessible toggle menu.
+ * Fully keyboard accessible.
+ */
+interface Props {
+  active?: 'home' | 'work' | 'writing' | 'about' | 'contact';
+}
+
+const { active = 'home' } = Astro.props;
+
+const links = [
+  { key: 'work', label: 'Work', href: '/work' },
+  { key: 'writing', label: 'Writing', href: '/writing' },
+  { key: 'about', label: 'About', href: '/about' },
+  { key: 'contact', label: 'Contact', href: '/contact' },
+] as const;
+---
+
+<header id="site-nav" class="site-nav" data-scrolled="false">
+  <nav class="site-nav__inner" aria-label="Primary">
+    <a href="/" class="wordmark" aria-label="Patrick Jusic — home">
+      <span class="wordmark__first">patrick</span>&nbsp;<span
+        class="wordmark__last">jusic</span
+      >
+    </a>
+
+    <ul class="site-nav__links">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['site-nav__link', active === link.key && 'is-active']}
+              aria-current={active === link.key ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href="/contact" class="site-nav__cta">Get in touch</a>
+
+    <button
+      id="site-nav-toggle"
+      class="site-nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav-mobile"
+      aria-label="Open menu"
+    >
+      <span class="site-nav__bars" aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <div id="site-nav-mobile" class="site-nav__mobile" hidden>
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'site-nav__mlink',
+                active === link.key && 'is-active',
+              ]}
+              aria-current={active === link.key ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="/contact" class="site-nav__mlink site-nav__mcta">
+          Get in touch →
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    /* Permanent subtle scrim so links stay legible over the hero portrait. */
+    background: linear-gradient(
+      180deg,
+      rgba(8, 13, 18, 0.72),
+      rgba(8, 13, 18, 0)
+    );
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .site-nav[data-scrolled='true'] {
+    background: rgba(8, 13, 18, 0.8);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    border-bottom-color: var(--line);
+  }
+
+  .site-nav__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .wordmark {
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-right: auto;
+  }
+  .wordmark__first {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .wordmark__last {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .site-nav__links {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.75rem;
+  }
+  @media (min-width: 720px) {
+    .site-nav__links {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .site-nav__link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  .site-nav__link:hover {
+    color: var(--text);
+  }
+  .site-nav__link.is-active {
+    color: var(--green);
+  }
+
+  /* Neutral ghost CTA (matches the approved hero mockup) — green only on hover
+     so it doesn't compete with the timeline/badge green pills. */
+  .site-nav__cta {
+    flex-shrink: 0;
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line);
+    transition: background-color 0.2s ease, border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .site-nav__cta:hover {
+    border-color: rgba(52, 196, 99, 0.45);
+    color: var(--green-bright);
+  }
+  @media (max-width: 719px) {
+    .site-nav__cta {
+      display: none;
+    }
+  }
+
+  /* ---- Mobile toggle (hamburger → X) ---- */
+  .site-nav__toggle {
+    display: none;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  @media (max-width: 719px) {
+    .site-nav__toggle {
+      display: inline-flex;
+    }
+  }
+  .site-nav__bars,
+  .site-nav__bars::before,
+  .site-nav__bars::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+  }
+  .site-nav__bars {
+    position: relative;
+  }
+  .site-nav__bars::before {
+    position: absolute;
+    top: -6px;
+    left: 0;
+  }
+  .site-nav__bars::after {
+    position: absolute;
+    top: 6px;
+    left: 0;
+  }
+  .site-nav__toggle[aria-expanded='true'] .site-nav__bars {
+    background: transparent;
+  }
+  .site-nav__toggle[aria-expanded='true'] .site-nav__bars::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .site-nav__toggle[aria-expanded='true'] .site-nav__bars::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* ---- Mobile menu panel ---- */
+  .site-nav__mobile {
+    display: none;
+    border-top: 1px solid var(--line);
+    background: rgba(8, 13, 18, 0.96);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    padding: 0.25rem 1.25rem 1rem;
+  }
+  @media (max-width: 719px) {
+    .site-nav__mobile:not([hidden]) {
+      display: block;
+    }
+  }
+  .site-nav__mobile ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-nav__mlink {
+    display: block;
+    padding: 0.85rem 0.25rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--line);
+    transition: color 0.2s ease;
+  }
+  .site-nav__mlink:hover,
+  .site-nav__mlink.is-active {
+    color: var(--green-bright);
+  }
+  .site-nav__mcta {
+    color: var(--green-bright);
+    font-weight: 600;
+    border-bottom: none;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    if (!nav) return;
+
+    var onScroll = function () {
+      nav.setAttribute('data-scrolled', window.scrollY > 8 ? 'true' : 'false');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    var toggle = document.getElementById('site-nav-toggle');
+    var panel = document.getElementById('site-nav-mobile');
+    if (toggle && panel) {
+      var setOpen = function (open) {
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        if (open) panel.removeAttribute('hidden');
+        else panel.setAttribute('hidden', '');
+      };
+      toggle.addEventListener('click', function () {
+        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+      });
+      panel.addEventListener('click', function (e) {
+        if (e.target && e.target.closest('a')) setOpen(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setOpen(false);
+      });
+    }
+  })();
+</script>

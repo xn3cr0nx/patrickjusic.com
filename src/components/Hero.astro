@@ -1,0 +1,145 @@
+---
+/**
+ * Hero — the home page centrepiece. Ported faithfully from the approved
+ * hero-v2 mockup: immersive PortraitField background bleeding off the right,
+ * mono kicker, glow headline, terminal TypedLine, CTAs and the xn3cr0nx
+ * signature, over faint scanline + slow beam ambient.
+ */
+import Kicker from './Kicker.astro';
+import GlowHeading from './GlowHeading.astro';
+import TypedLine from './TypedLine.astro';
+import PortraitField from './PortraitField.astro';
+
+const typedLines = [
+  'Founder & CTO at Chipcolate',
+  'Former Head of Engineering at Toggl',
+  '500k+ daily users, migrated to Kubernetes',
+  'Writing about APIs, scale & sovereignty',
+];
+---
+
+<section class="hero">
+  <PortraitField />
+  <div class="scanline hero-scan" aria-hidden="true"></div>
+  <div class="beam hero-beam" aria-hidden="true"></div>
+
+  <div class="inner">
+    <div class="left">
+      <Kicker class="hero-kicker mono">founder · engineering leader · bitcoiner · father</Kicker>
+      <GlowHeading level={1} class="hero-h1">
+        I scale systems —<br />and the teams<br />behind them.
+      </GlowHeading>
+      <TypedLine lines={typedLines} />
+      <div class="cta">
+        <a class="btn primary" href="/contact">Get in touch</a>
+        <a class="btn ghost" href="/writing">Read the writing →</a>
+      </div>
+      <div class="sig mono">— xn3cr0nx</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-scan {
+    z-index: 2;
+    opacity: 0.4;
+    mix-blend-mode: normal;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(52, 196, 99, 0.03) 0 2px,
+      transparent 2px 4px
+    );
+  }
+  .hero-beam {
+    z-index: 2;
+  }
+
+  .inner {
+    position: relative;
+    z-index: 3;
+    max-width: 1360px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px clamp(24px, 5vw, 72px) 80px;
+    pointer-events: none;
+  }
+  .left {
+    max-width: 640px;
+  }
+  .left :global(a),
+  .left .btn {
+    pointer-events: auto;
+  }
+
+  /* These classes land on elements rendered by child components (Kicker /
+     GlowHeading), so the rules must be :global — Astro's scoped attribute is
+     only added to this component's own elements. */
+  :global(.hero-kicker) {
+    margin-bottom: 24px;
+  }
+
+  :global(.hero-h1) {
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    font-size: clamp(38px, 5vw, 80px);
+  }
+
+  .cta {
+    display: flex;
+    gap: 14px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    font-size: 14.5px;
+    font-weight: 500;
+    padding: 14px 24px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+    border: 1px solid transparent;
+  }
+  .btn.primary {
+    background: var(--green);
+    color: #04140a;
+  }
+  .btn.primary:hover {
+    box-shadow: 0 10px 34px rgba(52, 196, 99, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn.ghost {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--line);
+    color: var(--text);
+  }
+  .btn.ghost:hover {
+    border-color: rgba(52, 196, 99, 0.45);
+    color: var(--green-bright);
+  }
+
+  .sig {
+    margin-top: 26px;
+    font-size: 12.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn.primary:hover {
+      transform: none;
+    }
+  }
+</style>

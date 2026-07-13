@@ -4,8 +4,13 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+  site: 'https://patrickjusic.com',
   output: 'static',
   adapter: vercel(),
+  redirects: {
+    '/blog': '/writing',
+    '/blog/[id]': '/writing/[id]',
+  },
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
@@ -20,30 +25,22 @@ export default defineConfig({
   },
   fonts: [
     {
-      provider: fontProviders.local(),
-      name: 'Geist Sans',
-      cssVariable: '--font-geist-sans',
-      options: {
-        variants: [
-          {
-            src: ['./src/fonts/GeistVF.woff'],
-            weight: '100 900',
-          },
-        ],
-      },
+      provider: fontProviders.google(),
+      name: 'Roboto',
+      cssVariable: '--font-roboto',
+      weights: [300, 400, 500, 700, 900],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['system-ui', 'sans-serif'],
     },
     {
-      provider: fontProviders.local(),
-      name: 'Geist Mono',
-      cssVariable: '--font-geist-mono',
-      options: {
-        variants: [
-          {
-            src: ['./src/fonts/GeistMonoVF.woff'],
-            weight: '100 900',
-          },
-        ],
-      },
+      provider: fontProviders.google(),
+      name: 'Roboto Mono',
+      cssVariable: '--font-roboto-mono',
+      weights: [400, 500],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['ui-monospace', 'monospace'],
     },
   ],
 });

@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Kicker from '../components/Kicker.astro';
+import GlowHeading from '../components/GlowHeading.astro';
+import Timeline from '../components/Timeline.astro';
+---
+
+<Layout
+  active="work"
+  title="Work"
+  description="A decade building and scaling systems — from founding crypto startups to leading a 500k-user platform. Patrick Jusic's full track record."
+>
+  <main class="pb-28">
+    <header class="head">
+      <div data-reveal>
+        <Kicker>// track record</Kicker>
+      </div>
+      <div data-reveal style="--reveal-delay:.06s">
+        <GlowHeading level={1} class="head-title text-balance">
+          A decade building and scaling systems.
+        </GlowHeading>
+      </div>
+      <p class="lede" data-reveal style="--reveal-delay:.12s">
+        From founding crypto startups to leading a 500k-user platform — the full
+        arc, most recent first.
+      </p>
+    </header>
+
+    <Timeline />
+  </main>
+</Layout>
+
+<style>
+  .head {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 150px clamp(24px, 5vw, 40px) 48px;
+  }
+  .head :global(.kicker) {
+    margin-bottom: 16px;
+  }
+  .head :global(.head-title) {
+    font-size: clamp(40px, 6vw, 72px);
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  .lede {
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-top: 20px;
+    max-width: 36em;
+  }
+
+  @media (max-width: 720px) {
+    .head {
+      padding-top: 120px;
+    }
+  }
+</style>
+
+<script>
+  import { initReveal } from '../lib/reveal';
+  initReveal();
+</script>
