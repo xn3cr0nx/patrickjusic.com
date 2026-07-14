@@ -3,7 +3,6 @@ import '../styles/globals.css';
 import { Font } from 'astro:assets';
 import { Toaster } from '../components/ui/toaster';
 import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
@@ -64,7 +63,6 @@ const ogImage = new URL(image ?? '/portrait-field.jpg', Astro.site ?? Astro.url)
   <body class="antialiased">
     <Nav active={active} />
     <slot />
-    <Footer />
     <Toaster client:load />
   </body>
 </html>
