@@ -1,0 +1,421 @@
+---
+/**
+ * Nav — fixed top navigation.
+ *
+ * Props:
+ *   active — which nav item is current: "work" | "writing" | "about" | "contact"
+ *            (omit or "home" for the homepage; nothing is highlighted)
+ *
+ * A permanent, subtle top-down scrim keeps the links legible over the hero
+ * portrait; a tiny inline script solidifies + blurs the background once
+ * scrolled. Social links live here (there is no footer). Below 720px the links
+ * + socials collapse into an accessible toggle menu. Fully keyboard accessible.
+ */
+interface Props {
+  active?: 'home' | 'work' | 'writing' | 'about' | 'contact';
+}
+
+const { active = 'home' } = Astro.props;
+
+const links = [
+  { key: 'work', label: 'Work', href: '/work' },
+  { key: 'writing', label: 'Writing', href: '/writing' },
+  { key: 'about', label: 'About', href: '/about' },
+] as const;
+
+const socials = [
+  {
+    label: 'X',
+    href: 'https://x.com/xn3cr0nx',
+    path: 'M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z',
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/xn3cr0nx',
+    path: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/patrickjusic/',
+    path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
+  },
+];
+---
+
+<header id="site-nav" class="site-nav" data-scrolled="false">
+  <nav class="site-nav__inner" aria-label="Primary">
+    <a href="/" class="wordmark" aria-label="Patrick Jusic — home">
+      <span class="wordmark__first">patrick</span>&nbsp;<span
+        class="wordmark__last">jusic</span
+      >
+    </a>
+
+    <ul class="site-nav__links">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['site-nav__link', active === link.key && 'is-active']}
+              aria-current={active === link.key ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <ul class="site-nav__socials">
+      {
+        socials.map((s) => (
+          <li>
+            <a
+              class="site-nav__social"
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d={s.path} />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href="/contact" class="site-nav__cta">Get in touch</a>
+
+    <button
+      id="site-nav-toggle"
+      class="site-nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav-mobile"
+      aria-label="Open menu"
+    >
+      <span class="site-nav__bars" aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <div id="site-nav-mobile" class="site-nav__mobile" hidden>
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'site-nav__mlink',
+                active === link.key && 'is-active',
+              ]}
+              aria-current={active === link.key ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="/contact" class="site-nav__mlink site-nav__mcta">
+          Get in touch →
+        </a>
+      </li>
+    </ul>
+    <div class="site-nav__msocials">
+      {
+        socials.map((s) => (
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.label}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d={s.path} />
+            </svg>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    /* Permanent subtle scrim so links stay legible over the hero portrait. */
+    background: linear-gradient(
+      180deg,
+      rgba(8, 13, 18, 0.72),
+      rgba(8, 13, 18, 0)
+    );
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .site-nav[data-scrolled='true'] {
+    background: rgba(8, 13, 18, 0.8);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    border-bottom-color: var(--line);
+  }
+
+  .site-nav__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .wordmark {
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-right: auto;
+  }
+  .wordmark__first {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .wordmark__last {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .site-nav__links {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.75rem;
+  }
+  @media (min-width: 720px) {
+    .site-nav__links {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .site-nav__link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  .site-nav__link:hover {
+    color: var(--text);
+  }
+  .site-nav__link.is-active {
+    color: var(--green);
+  }
+
+  /* ---- Social icons (this nav replaces the footer) ---- */
+  .site-nav__socials {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0 0.25rem;
+    gap: 1rem;
+    align-items: center;
+    border-left: 1px solid var(--line);
+    padding-left: 1.25rem;
+  }
+  @media (min-width: 720px) {
+    .site-nav__socials {
+      display: flex;
+    }
+  }
+  .site-nav__social {
+    color: var(--muted);
+    display: inline-flex;
+    transition: color 0.2s ease;
+  }
+  .site-nav__social:hover {
+    color: var(--green-bright);
+  }
+  .site-nav__social svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+    display: block;
+  }
+
+  /* Neutral ghost CTA (matches the approved hero mockup). */
+  .site-nav__cta {
+    flex-shrink: 0;
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line);
+    transition: background-color 0.2s ease, border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .site-nav__cta:hover {
+    border-color: rgba(52, 196, 99, 0.45);
+    color: var(--green-bright);
+  }
+  @media (max-width: 719px) {
+    .site-nav__cta {
+      display: none;
+    }
+  }
+
+  /* ---- Mobile toggle (hamburger → X) ---- */
+  .site-nav__toggle {
+    display: none;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  @media (max-width: 719px) {
+    .site-nav__toggle {
+      display: inline-flex;
+    }
+  }
+  .site-nav__bars,
+  .site-nav__bars::before,
+  .site-nav__bars::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+  }
+  .site-nav__bars {
+    position: relative;
+  }
+  .site-nav__bars::before {
+    position: absolute;
+    top: -6px;
+    left: 0;
+  }
+  .site-nav__bars::after {
+    position: absolute;
+    top: 6px;
+    left: 0;
+  }
+  .site-nav__toggle[aria-expanded='true'] .site-nav__bars {
+    background: transparent;
+  }
+  .site-nav__toggle[aria-expanded='true'] .site-nav__bars::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .site-nav__toggle[aria-expanded='true'] .site-nav__bars::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* ---- Mobile menu panel ---- */
+  .site-nav__mobile {
+    display: none;
+    border-top: 1px solid var(--line);
+    background: rgba(8, 13, 18, 0.96);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    padding: 0.25rem 1.25rem 1rem;
+  }
+  @media (max-width: 719px) {
+    .site-nav__mobile:not([hidden]) {
+      display: block;
+    }
+  }
+  .site-nav__mobile ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-nav__mlink {
+    display: block;
+    padding: 0.85rem 0.25rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--line);
+    transition: color 0.2s ease;
+  }
+  .site-nav__mlink:hover,
+  .site-nav__mlink.is-active {
+    color: var(--green-bright);
+  }
+  .site-nav__mcta {
+    color: var(--green-bright);
+    font-weight: 600;
+    border-bottom: none;
+  }
+  .site-nav__msocials {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.1rem 0.25rem 0.35rem;
+  }
+  .site-nav__msocials a {
+    color: var(--muted);
+    display: inline-flex;
+    transition: color 0.2s ease;
+  }
+  .site-nav__msocials a:hover {
+    color: var(--green-bright);
+  }
+  .site-nav__msocials svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    display: block;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    if (!nav) return;
+
+    var onScroll = function () {
+      nav.setAttribute('data-scrolled', window.scrollY > 8 ? 'true' : 'false');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    var toggle = document.getElementById('site-nav-toggle');
+    var panel = document.getElementById('site-nav-mobile');
+    if (toggle && panel) {
+      var setOpen = function (open) {
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        if (open) panel.removeAttribute('hidden');
+        else panel.setAttribute('hidden', '');
+      };
+      toggle.addEventListener('click', function () {
+        setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+      });
+      panel.addEventListener('click', function (e) {
+        if (e.target && e.target.closest('a')) setOpen(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setOpen(false);
+      });
+    }
+  })();
+</script>

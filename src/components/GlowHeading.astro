@@ -1,0 +1,29 @@
+---
+/**
+ * GlowHeading — a heading with the signature glow treatment (green gradient
+ * clipped to text + green bloom). Content via slot.
+ *
+ * Props:
+ *   level — 1 | 2 | 3  → renders <h1>/<h2>/<h3> (default 2)
+ *   class — extra classes merged onto the heading (sizing, tracking, etc.)
+ *
+ * The component only applies the .glow color/bloom treatment and sensible
+ * default weight/leading — pass sizing via `class` (e.g. "text-5xl md:text-7xl").
+ *
+ * Usage:
+ *   <GlowHeading level={1} class="text-5xl md:text-7xl font-black tracking-tight">
+ *     I scale systems — and the teams behind them.
+ *   </GlowHeading>
+ */
+interface Props {
+  level?: 1 | 2 | 3;
+  class?: string;
+}
+
+const { level = 2, class: className = '' } = Astro.props;
+const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
+---
+
+<Tag class:list={['glow', 'font-black', 'leading-[1.05]', className]}>
+  <slot />
+</Tag>

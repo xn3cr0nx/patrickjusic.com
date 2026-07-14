@@ -1,0 +1,27 @@
+---
+/**
+ * Badge — small pill. Green variant (default) or neutral variant.
+ * Content via slot. Renders a <span>.
+ *
+ * Props:
+ *   variant — "green" | "neutral"  (default "green")
+ *   as      — HTML tag to render   (default "span")
+ *   class   — extra classes merged onto the badge
+ *
+ * Usage:
+ *   <Badge>500k+ daily users</Badge>
+ *   <Badge variant="neutral">BQTX</Badge>
+ */
+interface Props {
+  variant?: 'green' | 'neutral';
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+
+const { variant = 'green', as = 'span', class: className = '' } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={['badge', variant === 'neutral' && 'badge-neutral', className]}>
+  <slot />
+</Tag>

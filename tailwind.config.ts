@@ -7,7 +7,33 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          "var(--font-roboto)",
+          "system-ui",
+          "-apple-system",
+          "sans-serif",
+        ],
+        mono: [
+          "var(--font-roboto-mono)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "monospace",
+        ],
+      },
       colors: {
+        // Brand palette (mapped to raw CSS vars in globals.css)
+        bg: "var(--bg)",
+        "bg-2": "var(--bg-2)",
+        green: {
+          DEFAULT: "var(--green)",
+          bright: "var(--green-bright)",
+          deep: "var(--green-deep)",
+        },
+        choco: "var(--choco)",
+        text: "var(--text)",
+        line: "var(--line)",
+        // shadcn/ui HSL tokens (kept for existing ui/* components)
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -27,7 +53,9 @@ const config: Config = {
           foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
+          // DEFAULT is the brand muted text color (#8a97a6); foreground stays
+          // on the shadcn HSL var so existing ui/* components inherit correctly.
+          DEFAULT: "var(--muted)",
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {

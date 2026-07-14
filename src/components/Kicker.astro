@@ -1,0 +1,22 @@
+---
+/**
+ * Kicker — mono, uppercase, letter-spaced green eyebrow label.
+ * Content via slot. Renders a <p class="kicker">.
+ *
+ * Props:
+ *   as    — HTML tag to render (default "p")
+ *   class — extra classes merged onto the .kicker element
+ *
+ * Usage:
+ *   <Kicker>// track record</Kicker>
+ */
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+
+const { as = 'p', class: className = '' } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={['kicker', className]}><slot /></Tag>

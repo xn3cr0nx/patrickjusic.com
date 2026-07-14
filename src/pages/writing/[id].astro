@@ -1,0 +1,108 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Kicker from '../../components/Kicker.astro';
+import GlowHeading from '../../components/GlowHeading.astro';
+import Badge from '../../components/Badge.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing');
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+const { Content } = await render(post);
+
+const displayDate = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = post.data.date.toISOString();
+
+const words = (post.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(words / 200));
+---
+
+<Layout title={post.data.title} description={post.data.description} active="writing">
+  <main class="mx-auto w-full max-w-3xl px-5 pb-24 pt-28 md:pt-32 lg:px-6">
+    <a
+      href="/writing"
+      class="mb-8 inline-flex items-center gap-1.5 font-mono text-[12.5px] text-[var(--muted)] transition-colors hover:text-green"
+    >
+      <span aria-hidden="true">&larr;</span> Back to writing
+    </a>
+
+    <article>
+      <header class="mb-10">
+        <Kicker>// writing</Kicker>
+        <GlowHeading level={1} class="mt-4 text-3xl md:text-5xl tracking-tight">
+          {post.data.title}
+        </GlowHeading>
+
+        <div class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[12.5px] text-[var(--muted)]">
+          <time datetime={isoDate}>{displayDate}</time>
+          <span aria-hidden="true" class="text-[var(--line)]">/</span>
+          <span>{readingTime} min read</span>
+          {
+            post.data.authors && (
+              <>
+                <span aria-hidden="true" class="text-[var(--line)]">/</span>
+                <span>by {post.data.authors.join(', ')}</span>
+              </>
+            )
+          }
+          {post.data.originalUrl && <Badge variant="neutral" class="ml-1">mirrored</Badge>}
+        </div>
+      </header>
+
+      {
+        post.data.originalUrl && (
+          <div class="mb-10 rounded-[var(--radius)] border border-green/25 bg-green/[0.06] p-5">
+            <p class="m-0 text-sm leading-relaxed text-[var(--muted)]">
+              <strong class="font-medium text-green-bright">Note:</strong> This post was
+              originally published on the{' '}
+              <a
+                href={post.data.originalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-green underline decoration-green/40 underline-offset-2 transition-colors hover:text-green-bright"
+              >
+                Toggl Engineering Blog
+              </a>
+              . It is mirrored here to ensure it remains available in case the original is
+              taken down.
+            </p>
+          </div>
+        )
+      }
+
+      <div
+        class="prose prose-invert max-w-none
+          prose-headings:font-bold prose-headings:text-[var(--text)]
+          prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:tracking-tight
+          prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+          prose-p:text-[var(--muted)] prose-p:leading-relaxed
+          prose-a:text-green prose-a:font-medium prose-a:no-underline hover:prose-a:underline prose-a:underline-offset-2
+          prose-strong:text-[var(--text)] prose-strong:font-medium
+          prose-em:text-[var(--text)]
+          prose-ol:text-[var(--muted)] prose-ul:text-[var(--muted)]
+          prose-li:leading-relaxed prose-li:marker:text-green
+          prose-blockquote:border-l-green prose-blockquote:text-[var(--muted)] prose-blockquote:font-normal prose-blockquote:not-italic
+          prose-code:text-green-bright prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+          prose-hr:border-[var(--line)]
+          prose-img:rounded-[var(--radius)]"
+      >
+        <Content />
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<script>
+  import { initReveal } from '../../lib/reveal';
+  initReveal();
+</script>

@@ -1,0 +1,286 @@
+---
+/**
+ * PortraitField — an immersive canvas portrait. Samples /portrait-field.jpg
+ * into a low-res grid, maps luminance to point radius/brightness, skips dark
+ * pixels so the face emerges from black. Cover-fit with a right-of-centre
+ * focal point; a CSS radial mask feathers the edges and bleeds off the right.
+ * Additive (lighter) compositing, breathing + sweeping scanline + cursor
+ * scatter.
+ *
+ * Reduced motion: draws a single static frame, no rAF loop.
+ * rAF is paused when the canvas is offscreen (IntersectionObserver) and when
+ * the document is hidden.
+ *
+ * Props:
+ *   src   — image path (default '/portrait-field.jpg')
+ *   class — extra classes merged onto the <canvas>
+ */
+interface Props {
+  src?: string;
+  class?: string;
+}
+
+const { src = '/portrait-field.jpg', class: className = '' } = Astro.props;
+---
+
+<canvas
+  class:list={['portrait-canvas', className]}
+  data-src={src}
+  aria-hidden="true"></canvas>
+
+<style>
+  .portrait-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 64vw;
+    height: 100%;
+    z-index: 1;
+    -webkit-mask-image: radial-gradient(
+      68% 80% at 71% 43%,
+      #000 0%,
+      #000 48%,
+      transparent 86%
+    );
+    mask-image: radial-gradient(
+      68% 80% at 71% 43%,
+      #000 0%,
+      #000 48%,
+      transparent 86%
+    );
+  }
+  @media (max-width: 860px) {
+    .portrait-canvas {
+      width: 100%;
+      opacity: 0.5;
+      -webkit-mask-image: radial-gradient(
+        70% 55% at 60% 30%,
+        #000 0%,
+        #000 42%,
+        transparent 82%
+      );
+      mask-image: radial-gradient(
+        70% 55% at 60% 30%,
+        #000 0%,
+        #000 42%,
+        transparent 82%
+      );
+    }
+  }
+</style>
+
+<script>
+  interface Pt {
+    x: number;
+    y: number;
+    l: number;
+    ph: number;
+  }
+
+  function initPortrait(cv: HTMLCanvasElement) {
+    if (cv.dataset.portraitInit === '1') return;
+    cv.dataset.portraitInit = '1';
+
+    const srcPath = cv.dataset.src || '/portrait-field.jpg';
+
+    let ctx: CanvasRenderingContext2D;
+    let W = 0;
+    let H = 0;
+    let pts: Pt[] = [];
+    let ready = false;
+    let mx = -999;
+    let my = -999;
+    let t = 0;
+    let rafId = 0;
+    let running = false;
+    let visible = true;
+
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    function size() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const r = cv.getBoundingClientRect();
+      cv.width = Math.max(1, Math.round(r.width * dpr));
+      cv.height = Math.max(1, Math.round(r.height * dpr));
+      const c = cv.getContext('2d');
+      if (!c) return;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx = c;
+      W = r.width;
+      H = r.height;
+    }
+
+    // Size the canvas up front so ctx/W/H are ready before any build() call
+    // (a cached image builds synchronously below).
+    size();
+
+    const img = new Image();
+
+    function build() {
+      if (!ctx || W === 0 || H === 0) return;
+      const STEP = 7;
+      const cols = Math.floor(W / STEP);
+      const rows = Math.floor(H / STEP);
+      if (cols <= 0 || rows <= 0) return;
+
+      const off = document.createElement('canvas');
+      off.width = cols;
+      off.height = rows;
+      const octx = off.getContext('2d');
+      if (!octx) return;
+
+      // cover-fit with focal point: portrait sits on the RIGHT, face right-of-centre
+      const iw = img.naturalWidth || 720;
+      const ih = img.naturalHeight || 720;
+      const scale = (rows * 1.04) / ih; // fill height (slight overflow to bleed top/bottom)
+      const dw = iw * scale;
+      const dh = ih * scale;
+      const dx = (cols - dw) * 0.72; // push right
+      const dy = (rows - dh) * 0.4; // show upper face
+      octx.drawImage(img, dx, dy, dw, dh);
+
+      const d = octx.getImageData(0, 0, cols, rows).data;
+      pts = [];
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const i = (y * cols + x) * 4;
+          const l = (d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114) / 255;
+          if (l < 0.16) continue;
+          pts.push({
+            x: x * STEP + STEP / 2,
+            y: y * STEP + STEP / 2,
+            l,
+            ph: Math.random() * 6.28,
+          });
+        }
+      }
+      ready = true;
+      // Paint one frame immediately so the portrait is visible even before the
+      // rAF loop starts — and stays visible whenever the loop is paused
+      // (canvas offscreen, hidden tab, or reduced motion). The loop animates it
+      // while the canvas is visible.
+      drawFrame();
+    }
+
+    function drawFrame() {
+      if (!ready || !ctx) return;
+      ctx.clearRect(0, 0, W, H);
+      const scanY = (t * 70) % (H + 160) - 80;
+      ctx.globalCompositeOperation = 'lighter';
+      for (let k = 0; k < pts.length; k++) {
+        const p = pts[k];
+        const br = 0.5 + 0.5 * Math.sin(t * 1.3 + p.ph);
+        const sd = Math.abs(p.y - scanY);
+        const sc = sd < 50 ? (1 - sd / 50) * 0.9 : 0;
+        let dx = 0;
+        let dy = 0;
+        if (mx > -500) {
+          const ex = p.x - mx;
+          const ey = p.y - my;
+          const dd = Math.hypot(ex, ey);
+          if (dd < 90 && dd > 0.1) {
+            const f = ((90 - dd) / 90) * 13;
+            dx = (ex / dd) * f;
+            dy = (ey / dd) * f;
+          }
+        }
+        const a = Math.min(1, p.l * (0.55 + 0.32 * br) + sc);
+        const rad = (0.7 + p.l * 1.9) * (1 + sc * 0.6);
+        ctx.fillStyle =
+          'rgba(' +
+          (58 + ((sc * 180) | 0)) +
+          ',' +
+          (200 + ((sc * 55) | 0)) +
+          ',' +
+          (112 + ((sc * 90) | 0)) +
+          ',' +
+          a.toFixed(3) +
+          ')';
+        ctx.beginPath();
+        ctx.arc(p.x + dx, p.y + dy, rad, 0, 6.28);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function frame() {
+      t += 0.016;
+      if (ready) drawFrame();
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (running || prefersReduced) return;
+      running = true;
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function evaluateRun() {
+      if (visible && !document.hidden) start();
+      else stop();
+    }
+
+    // BUGFIX: cached images never fire onload -> run build immediately when
+    // the image is already complete.
+    img.onload = () => build();
+    img.onerror = () =>
+      console.warn('PortraitField: image failed to load —', srcPath);
+    img.src = srcPath;
+    // Cached images can already be complete before onload is attached.
+    if (img.complete && img.naturalWidth > 0) build();
+
+    cv.addEventListener('mousemove', (e) => {
+      const r = cv.getBoundingClientRect();
+      mx = e.clientX - r.left;
+      my = e.clientY - r.top;
+    });
+    cv.addEventListener('mouseleave', () => {
+      mx = -999;
+      my = -999;
+    });
+
+    // pause offscreen
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          visible = entries[0]?.isIntersecting ?? true;
+          evaluateRun();
+        },
+        { threshold: 0 }
+      );
+      io.observe(cv);
+    }
+
+    // pause when tab hidden
+    document.addEventListener('visibilitychange', evaluateRun);
+
+    let rt: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(() => {
+        size();
+        if (img.complete && img.naturalWidth > 0) build();
+        if (prefersReduced) drawFrame();
+      }, 220);
+    });
+
+    if (prefersReduced) {
+      // draw one static frame (build() will also draw once the image loads)
+      if (ready) drawFrame();
+    } else {
+      evaluateRun();
+    }
+  }
+
+  document
+    .querySelectorAll<HTMLCanvasElement>('.portrait-canvas')
+    .forEach(initPortrait);
+</script>

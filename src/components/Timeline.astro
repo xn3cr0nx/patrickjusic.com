@@ -1,0 +1,418 @@
+---
+/**
+ * Timeline — the /work vertical track record.
+ *
+ * A vertical line that DRAWS itself as you scroll: a green fill grows from the
+ * top, each role's dot lights when the fill tip reaches it, and entries fade /
+ * slide up as they enter the viewport. A "full history & earlier roles" control
+ * reveals the individual early roles (the breakdown of the grouped 2017–2019
+ * entry, plus Leroy Merlin).
+ *
+ * Data-driven from src/data/roles.ts. No props.
+ *
+ * Ported faithfully from the approved mockup timeline, with:
+ *   - real role data + company links,
+ *   - the grouped early roles expandable individually,
+ *   - a reduced-motion path (fill full, all dots lit, all entries revealed,
+ *     no scroll-driven animation).
+ */
+import { roles, earlyRoles, type Role } from '../data/roles';
+---
+
+<section class="tl-wrap" data-timeline>
+  <div class="tl" id="tl">
+    <div class="track"></div>
+    <div class="fill" data-fill></div>
+
+    {
+      roles.map((role: Role) => (
+        <div class="item">
+          <div class="period mono">{role.period}</div>
+          <div class="dot" aria-hidden="true" />
+          <h3>
+            {role.title}{' '}
+            {role.companyUrl ? (
+              <a
+                class:list={['co', role.group && 'sm']}
+                href={role.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {role.company}
+              </a>
+            ) : (
+              <span class:list={['co', role.group && 'sm']}>{role.company}</span>
+            )}
+          </h3>
+          <p>{role.description}</p>
+          {role.badges && role.badges.length > 0 && (
+            <div class="badges">
+              {role.badges.map((b) => (
+                <span class:list={['badge', b.variant === 'neutral' && 'n']}>
+                  {b.label}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))
+    }
+
+    <div class="extra" id="early-roles" data-extra hidden>
+      {
+        earlyRoles.map((role: Role) => (
+          <div class="item">
+            <div class="period mono">{role.period}</div>
+            <div class="dot" aria-hidden="true" />
+            <h3>
+              {role.title}{' '}
+              {role.companyUrl ? (
+                <a
+                  class="co"
+                  href={role.companyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {role.company}
+                </a>
+              ) : (
+                <span class="co">{role.company}</span>
+              )}
+            </h3>
+            <p>{role.description}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <button
+      class="more mono"
+      type="button"
+      data-more
+      aria-expanded="false"
+      aria-controls="early-roles"
+    >
+      + full history &amp; earlier roles
+    </button>
+  </div>
+</section>
+
+<style>
+  .tl-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-inline: clamp(24px, 5vw, 40px);
+  }
+  .tl {
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 40px;
+  }
+
+  .track,
+  .fill {
+    position: absolute;
+    left: 188px;
+    width: 2px;
+    top: 8px;
+  }
+  .track {
+    bottom: 96px;
+    background: rgba(255, 255, 255, 0.09);
+  }
+  .fill {
+    height: 0;
+    background: linear-gradient(180deg, var(--green-bright), var(--green-deep));
+    box-shadow: 0 0 12px rgba(52, 196, 99, 0.7);
+    transition: height 0.1s linear;
+  }
+
+  .item {
+    position: relative;
+    padding: 0 0 60px 232px;
+    min-height: 78px;
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  .item.in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .period {
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 176px;
+    text-align: right;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .dot {
+    position: absolute;
+    left: 180px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid rgba(255, 255, 255, 0.22);
+    transition: 0.35s;
+    z-index: 2;
+  }
+  .item.lit .dot {
+    border-color: var(--green);
+    background: var(--green-deep);
+    box-shadow: 0 0 16px rgba(52, 196, 99, 0.85);
+  }
+
+  .item h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .item .co {
+    color: var(--green-bright);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  a.co:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .item .co.sm {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 14px;
+    margin-left: 8px;
+  }
+  a.co.sm:hover {
+    color: var(--text);
+  }
+  .item p {
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin-top: 10px;
+    max-width: 44em;
+  }
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .badge {
+    font-size: 12px;
+    color: var(--green-bright);
+    background: rgba(52, 196, 99, 0.08);
+    border: 1px solid rgba(52, 196, 99, 0.25);
+    border-radius: 999px;
+    padding: 5px 12px;
+    white-space: nowrap;
+  }
+  .badge.n {
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--line);
+    white-space: normal;
+  }
+
+  .extra[hidden] {
+    display: none;
+  }
+
+  .more {
+    margin-left: 232px;
+    color: var(--muted);
+    font-size: 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 18px;
+    display: inline-block;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background 0.25s ease;
+  }
+  .more:hover {
+    color: var(--text);
+    border-color: rgba(52, 196, 99, 0.35);
+    background: rgba(52, 196, 99, 0.04);
+  }
+
+  @media (max-width: 720px) {
+    .track,
+    .fill {
+      left: 8px;
+    }
+    .track {
+      bottom: 96px;
+    }
+    .item {
+      padding-left: 44px;
+    }
+    .period {
+      position: static;
+      width: auto;
+      text-align: left;
+      margin-bottom: 4px;
+    }
+    .dot {
+      left: 0;
+    }
+    .more {
+      margin-left: 44px;
+    }
+  }
+
+  /* Reduced motion: entries are pre-settled (no scroll-in transition). */
+  @media (prefers-reduced-motion: reduce) {
+    .item {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initTimeline() {
+    const root = document.querySelector<HTMLElement>('[data-timeline]');
+    if (!root) return;
+
+    const tl = root.querySelector<HTMLElement>('.tl');
+    const track = root.querySelector<HTMLElement>('.track');
+    const fill = root.querySelector<HTMLElement>('[data-fill]');
+    const moreBtn = root.querySelector<HTMLButtonElement>('[data-more]');
+    const extra = root.querySelector<HTMLElement>('[data-extra]');
+    if (!tl || !track || !fill) return;
+
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    // Current set of laid-out items (rebuilt when the extra roles are shown).
+    let items: HTMLElement[] = [];
+    const rebuildItems = () => {
+      items = Array.from(root.querySelectorAll<HTMLElement>('.item')).filter(
+        (el) => el.offsetParent !== null // skip display:none items
+      );
+    };
+
+    const settleAll = () => {
+      items.forEach((it) => {
+        it.classList.add('in');
+        it.classList.add('lit');
+      });
+      const r = track.getBoundingClientRect();
+      fill.style.height = r.height + 'px';
+    };
+
+    // ---- Reveal-on-enter (own observer, matching the mockup) ----
+    let revealObserver: IntersectionObserver | null = null;
+    if (!prefersReduced && 'IntersectionObserver' in window) {
+      revealObserver = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+    }
+    const observeReveal = (els: HTMLElement[]) => {
+      if (revealObserver) els.forEach((el) => revealObserver!.observe(el));
+      else els.forEach((el) => el.classList.add('in')); // reduced / no IO
+    };
+
+    // ---- Scroll-driven fill + dot lighting (ported from the mockup) ----
+    let ticking = false;
+    const compute = () => {
+      ticking = false;
+      const r = track.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const full = r.height;
+      const passed = vh * 0.52 - r.top; // read-line travel down the track
+      const h = Math.max(0, Math.min(full, passed));
+      fill.style.height = h + 'px';
+      const fillBottom = r.top + h; // viewport y of the fill tip
+      items.forEach((it) => {
+        const dot = it.querySelector('.dot');
+        if (!dot) return;
+        const d = dot.getBoundingClientRect();
+        if (d.top + 7 <= fillBottom) it.classList.add('lit');
+        else it.classList.remove('lit');
+      });
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(compute);
+    };
+
+    // ---- Expand / collapse the early roles ----
+    const setupMore = () => {
+      if (!moreBtn || !extra) return;
+      moreBtn.addEventListener('click', () => {
+        const expanded = moreBtn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          extra.hidden = true;
+          moreBtn.setAttribute('aria-expanded', 'false');
+          moreBtn.textContent = '+ full history & earlier roles';
+        } else {
+          extra.hidden = false;
+          moreBtn.setAttribute('aria-expanded', 'true');
+          moreBtn.textContent = '− show less';
+          const newItems = Array.from(
+            extra.querySelectorAll<HTMLElement>('.item')
+          );
+          if (prefersReduced) {
+            newItems.forEach((el) => {
+              el.classList.add('in');
+              el.classList.add('lit');
+            });
+          } else {
+            observeReveal(newItems);
+          }
+        }
+        rebuildItems();
+        if (prefersReduced) settleAll();
+        else compute();
+      });
+    };
+
+    // ---- Boot ----
+    rebuildItems();
+    setupMore();
+
+    if (prefersReduced) {
+      // Fill full, all dots lit, all entries revealed; no scroll animation.
+      settleAll();
+      return;
+    }
+
+    observeReveal(items);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    // Recompute if the fonts/layout shift after load.
+    window.addEventListener('load', compute);
+    compute();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTimeline);
+  } else {
+    initTimeline();
+  }
+</script>
