@@ -8,42 +8,4 @@ import Hero from '../components/Hero.astro';
   description="Founder & CTO at Chipcolate and former Head of Engineering at Toggl. I scale systems — and the teams behind them."
 >
   <Hero />
-
-  <section class="intro">
-    <p class="intro-text" data-reveal>
-      A decade building and scaling engineering — from
-      <a href="/work">500k+ daily users and a Kubernetes migration at Toggl</a>
-      to founding <a href="/about">Chipcolate</a>. I write about
-      <a href="/writing">APIs, scale &amp; sovereignty</a>.
-    </p>
-  </section>
 </Layout>
-
-<style>
-  .intro {
-    max-width: 1360px;
-    margin: 0 auto;
-    padding: 0 clamp(24px, 5vw, 72px) 40px;
-  }
-  .intro-text {
-    max-width: 640px;
-    font-size: clamp(16px, 1.5vw, 20px);
-    line-height: 1.7;
-    color: var(--muted);
-  }
-  .intro-text a {
-    color: var(--green-bright);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(52, 196, 99, 0.25);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .intro-text a:hover {
-    color: var(--text);
-    border-bottom-color: rgba(52, 196, 99, 0.6);
-  }
-</style>
-
-<script>
-  import { initReveal } from '../lib/reveal';
-  initReveal();
-</script>
