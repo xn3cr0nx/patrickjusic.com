@@ -137,12 +137,11 @@ const typedLines = [
     letter-spacing: 0.06em;
   }
 
-  /* Mobile: drop the hero text to the bottom so the boosted portrait owns the
-     top-right of the screen (see PortraitField.astro mobile treatment). */
+  /* Mobile: text sits at the top; the boosted portrait sits below it, anchored
+     to the lower-right (see PortraitField.astro mobile treatment). */
   @media (max-width: 860px) {
     .inner {
-      align-items: flex-end;
-      padding-bottom: 12vh;
+      align-items: flex-start;
     }
   }
 
