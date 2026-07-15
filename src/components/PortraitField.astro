@@ -49,21 +49,27 @@ const { src = '/portrait-field.jpg', class: className = '' } = Astro.props;
       transparent 86%
     );
   }
+  /* Mobile: a large square portrait in the upper area, offset off the right
+     edge so ~half the face bleeds away — boosted and clearly visible, with the
+     hero text dropped to the bottom (see Hero.astro) so they don't overlap. */
   @media (max-width: 860px) {
     .portrait-canvas {
-      width: 100%;
-      opacity: 0.5;
+      width: 112vw;
+      height: 112vw;
+      top: 2vh;
+      right: -34vw;
+      opacity: 0.95;
       -webkit-mask-image: radial-gradient(
-        70% 55% at 60% 30%,
+        54% 54% at 46% 44%,
         #000 0%,
-        #000 42%,
-        transparent 82%
+        #000 50%,
+        transparent 80%
       );
       mask-image: radial-gradient(
-        70% 55% at 60% 30%,
+        54% 54% at 46% 44%,
         #000 0%,
-        #000 42%,
-        transparent 82%
+        #000 50%,
+        transparent 80%
       );
     }
   }
